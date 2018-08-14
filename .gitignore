@@ -1,5 +1,8 @@
-# Byte-compiled / optimized / DLL files
+# 文件夹
 __pycache__/
+venv/
+
+# 文件
 *.py[cod]
 *$py.class
 
