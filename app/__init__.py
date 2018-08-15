@@ -21,8 +21,11 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
 
-    from .main import main as main_blueprint     # 导入蓝本main
-    app.register_blueprint(main_blueprint)       # 注册蓝本main
+    from .main import main as main_blueprint                  # 导入蓝本main
+    app.register_blueprint(main_blueprint)                    # 注册蓝本main
+
+    from .auth import auth as auth_blueprint                   # 导入蓝本auth
+    app.register_blueprint(auth_blueprint, url_prefix='/auth') # 注册蓝本auth
 
     return app
 

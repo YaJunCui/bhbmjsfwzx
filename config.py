@@ -27,19 +27,19 @@ class DevelopmentConfig(Config):
     MAIL_USERNAME = 'bhbmjsfwzx@163.com'
     MAIL_PASSWORD = 'bhbmjsfwzx123'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'mysql://root:root@45.40.192.224/bhbmjsfwzx_dev'
+        'mysql+pymysql://root:root@45.40.192.224/bhbmjsfwzx_dev'
 
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'mysql://root:root@45.40.192.224/bhbmjsfwzx_test'
+        'mysql+pymysql://root:root@45.40.192.224/bhbmjsfwzx_test'
     WTF_CSRF_ENABLED = False
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'mysql://root:root@45.40.192.224/bhbmjsfwzx'
+        'mysql+pymysql://root:root@45.40.192.224/bhbmjsfwzx'
 
 
 config = {

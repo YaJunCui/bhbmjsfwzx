@@ -24,6 +24,7 @@ def index():
         else:
             session['known'] = True
         session['name'] = form.name.data
+        form.name.data = ''
         return redirect(url_for('.index'))              # 提交成功，则重定向到主页 
     return render_template('index.html',
                            form=form, name=session.get('name'),
