@@ -6,7 +6,7 @@ class Config:
    
     MAIL_SUBJECT_PREFIX = '[北海保密技术服务中心]'
     MAIL_SENDER = 'bhbmjsfwzx@163.com'
-    ADMIN = os.environ.get('ADMIN', 'bhbmjsfwzx@163.com')
+    ADMIN = 'bhbmjsfwzx@163.com'               # 管理员邮箱账号
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 20
