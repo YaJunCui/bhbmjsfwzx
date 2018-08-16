@@ -1,4 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 from flask_login import UserMixin
 from . import db, login_manager
 
@@ -20,6 +22,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))     # 外键
+    confirmed = db.Column(db.Boolean, default=False)               # 标志注册的新用户是否已经通过邮箱确认
     
     # 不允许读取
     @property
@@ -34,6 +37,24 @@ class User(UserMixin, db.Model):
     # 验证密码是否正确
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    # 生成邮箱确认令牌
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id}).decode('utf-8')
+
+    # 确认邮箱令牌
+    def confirm(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        return True
 
     def __repr__(self):
         return '<User %r>' % self.username

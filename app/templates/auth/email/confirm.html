@@ -1,0 +1,8 @@
+<p>{{ user.username }} 您好，</p>
+<p>欢迎您使用<b>北海市保密技术服务中心管理系统</b>！</p>
+<p>请在1小时内点击此链接完成账户确认：
+<a href="{{ url_for('auth.confirm', token=token, _external=True) }}">{{ url_for('auth.confirm', token=token, _external=True) }}</a></p>
+
+<p>此敬，</p>
+<p>北海市保密技术服务中心管理系统团队</p>
+<p><small>提示: 此为系统邮箱，请勿回复。</small></p>
