@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}北海市保密技术服务中心-登录{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>登录</h1>
+</div>
+<p>{{ next }}</p>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
