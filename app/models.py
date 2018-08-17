@@ -1,3 +1,4 @@
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
@@ -78,7 +79,12 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))     # 外键
-    confirmed = db.Column(db.Boolean, default=False)               # 标志注册的新用户是否已经通过邮箱确认
+    confirmed = db.Column(db.Boolean, default=False)               # 标志新用户是否已确认
+    department = db.Column(db.String(64))                          # 部门名称
+    location = db.Column(db.String(128))                           # 位置
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    remarks = db.Column(db.Text())
 
     # 定义默认的用户角色
     def __init__(self, **kwargs):
@@ -173,6 +179,11 @@ class User(UserMixin, db.Model):
     def is_administrator(self):
         return self.can(Permission.ADMIN)
 
+    # 刷新最后访问时间
+    def ping(self):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+    
     def __repr__(self):
         return '<User %r>' % self.username
 

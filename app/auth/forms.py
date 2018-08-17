@@ -28,12 +28,12 @@ class RegistrationForm(FlaskForm):
     # 校验邮箱是否已被注册
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
-            raise ValidationError("该邮香已被注册")
+            raise ValidationError("该邮箱已被注册！")
 
     # 校验用户名是否已存在
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
-            raise ValidationError("该用户名已经存在")
+            raise ValidationError("该用户名已经存在！")
 
     # 校验邮箱是否已被注册
     def validate_email(self, field):
