@@ -5,7 +5,8 @@ from . import auth
 from .. import db
 from ..models import User
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
+    PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 
 # 处理未确认的账户
 @auth.before_app_request
@@ -64,6 +65,14 @@ def register():
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html", form=form)
 
+# 用户信息
+@auth.route("/user_info")
+@login_required
+def user_info():
+    return render_template("auth/user_info.html")
+
+
+
 # 新用户邮箱确认
 @auth.route("/confirm/<token>")
 @login_required
@@ -85,4 +94,81 @@ def resend_confirmation():
     send_email(current_user.email, "确认账户",
                "auth/email/confirm", user=current_user, token=token)
     flash("新的账户确认信息已发送到您的邮箱！")
+    return redirect(url_for("main.index"))
+
+# 修改密码
+@auth.route("/change-password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if current_user.verify_password(form.old_password.data):
+            current_user.password = form.password.data
+            db.session.add(current_user)
+            db.session.commit()
+            flash("密码更新成功！")
+            return redirect(url_for("main.index"))
+        else:
+            flash("无效的密码")
+    return render_template("auth/change_password.html", form=form)
+
+# 通过邮件发送重置密码的请求
+@auth.route("/reset", methods=["GET", "POST"])
+def password_reset_request():
+    if not current_user.is_anonymous:
+        return redirect(url_for("main.index"))
+    form = PasswordResetRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            token = user.generate_reset_token()
+            send_email(user.email, "重置密码",
+                       "auth/email/reset_password",
+                       user=user, token=token)
+        flash("密码重置链接已通过邮件发送给您！")
+        return redirect(url_for("auth.login"))
+    return render_template("auth/reset_password.html", form=form)
+
+# 重置密码
+@auth.route("/reset/<token>", methods=["GET", "POST"])
+def password_reset(token):
+    if not current_user.is_anonymous:
+        return redirect(url_for("main.index"))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        if User.reset_password(token, form.password.data):
+            db.session.commit()
+            flash("密码重置成功！")
+            return redirect(url_for("auth.login"))
+        else:
+            return redirect(url_for("main.index"))
+    return render_template("auth/reset_password.html", form=form)
+
+# 重置邮箱的请求
+@auth.route("/change_email", methods=["GET", "POST"])
+@login_required
+def change_email_request():
+    form = ChangeEmailForm()
+    if form.validate_on_submit():
+        if current_user.verify_password(form.password.data):
+            new_email = form.email.data
+            token = current_user.generate_email_change_token(new_email)
+            send_email(new_email, "重置邮箱",
+                       "auth/email/change_email",
+                       user=current_user, token=token)
+            flash("确认重置邮箱的链接已通过邮件发送给您！")
+            return redirect(url_for("main.index"))
+        else:
+            flash("无效的邮箱或者密码")
+    return render_template("auth/change_email.html", form=form)
+
+# 重置邮箱
+@auth.route("/change_email/<token>")
+@login_required
+def change_email(token):
+    if current_user.change_email(token):       # 调用User对象的change_email方法
+        db.session.commit()
+        flash("邮箱已重置成功！")
+    else:
+        flash("无效的邮箱重置请求！")
     return redirect(url_for("main.index"))
