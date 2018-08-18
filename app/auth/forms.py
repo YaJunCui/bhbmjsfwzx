@@ -19,11 +19,12 @@ class RegistrationForm(FlaskForm):
     username = StringField("用户名：", validators=[
         DataRequired(), Length(1, 64),
         Regexp("^[A-Za-z][A-Za-z0-9_.]*$", 0,
-               "用户名只能包含字母、数字、.和_")])
+               "用户名只能包含字母、数字、.和_")],
+        render_kw = {"placeholder": "example@126.com"})
     password = PasswordField("密码：", validators=[
         DataRequired(), EqualTo("password2", message="两次填写的密码不一致")])
     password2 = PasswordField("确认密码：", validators=[DataRequired()])
-    submit = SubmitField("立即注册")
+    submit = SubmitField("立即注册", render_kw={"title":"按钮"})
 
     # 校验邮箱是否已被注册
     def validate_email(self, field):
