@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-auth = Blueprint('reverse', __name__)
+reserve = Blueprint('reserve', __name__)
 
 from . import views
