@@ -74,8 +74,6 @@ def register():
 def user_info():
     return render_template("auth/user_info.html")
 
-
-
 # 新用户邮箱确认
 @auth.route("/confirm/<token>")
 @login_required
