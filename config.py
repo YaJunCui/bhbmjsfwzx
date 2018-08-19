@@ -8,7 +8,8 @@ class Config:
     MAIL_SENDER = 'bhbmjsfwzx@163.com'
     ADMIN = 'bhbmjsfwzx@163.com'               # 管理员邮箱账号
 
-    SQLALCHEMY_POOL_RECYCLE = 7200
+    SQLALCHEMY_POOL_RECYCLE = 5
+    SQLALCHEMY_ECHO = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 20
     FOLLOWERS_PER_PAGE = 50
