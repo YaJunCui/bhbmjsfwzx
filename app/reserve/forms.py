@@ -4,7 +4,6 @@ from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField, DateTimeField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
-from ..models import Role, User
 
 
 # 预约信息表单
@@ -20,11 +19,9 @@ class ReserveInfoForm(FlaskForm):
     remarks = TextAreaField("备注：")
     submit = SubmitField("提交")
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ReserveInfoForm, self).__init__(*args, **kwargs)
-        self.department.default = user.department
         self.time_interval.choices = [(time_interval, time_interval) for time_interval in self._get_time_interval()]
-        self.user = user
 
     # 时段
     def _get_time_interval(self):

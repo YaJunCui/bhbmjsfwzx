@@ -215,7 +215,9 @@ class ReserveInfo(db.Model):
     approver = db.Column(db.String(64))                           # 送销单位审批人
     sender = db.Column(db.String(64))                             # 送销人
     telephone = db.Column(db.String(64))                          # 联系电话
-    date = db.Column(db.String(64))                               # 日期
+    date_year = db.Column(db.String(64))                               # 日期
+    date_month = db.Column(db.String(64))                               # 日期
+    date_day = db.Column(db.String(64))                               # 日期
     time_interval = db.Column(db.String(64))                      # 时段
     remarks = db.Column(db.Text())                                # 备注
 
