@@ -5,7 +5,7 @@ from .forms import ReserveInfoForm
 from .. import db
 from ..models import Role, User, ReserveInfo
 
-@reserve.route('reserve/add_reserve', methods=["GET", "POST"])
+@reserve.route('/reserve/add_reserve', methods=["GET", "POST"])
 @login_required
 def add_reserve():
     user = User.query.get_or_404(current_user.id)

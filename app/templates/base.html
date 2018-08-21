@@ -38,7 +38,7 @@
                       <li><a href="#">查询预约</a></li>
                     </ul>
                   </li>
-                <li><a href="#">留言板</a></li>
+                <li><a href="{{ url_for('message_board.add_message') }}">留言板</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}

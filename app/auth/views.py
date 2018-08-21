@@ -22,14 +22,14 @@ def before_request():
             return redirect(url_for("auth.unconfirmed"))
 
 # 账户未被确认的视图
-@auth.route("auth/unconfirmed")
+@auth.route("/auth/unconfirmed")
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for("main.index"))
     return render_template("auth/unconfirmed.html")
 
 # 登录
-@auth.route("auth/login", methods=["GET", "POST"])
+@auth.route("/auth/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -44,7 +44,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 # 退出
-@auth.route("auth/logout")
+@auth.route("/auth/logout")
 @login_required
 def logout():
     logout_user()           # 调用flask-login的logout_user(),退出登录
@@ -52,7 +52,7 @@ def logout():
     return redirect(url_for("main.index"))
 
 # 注册新用户
-@auth.route("auth/register", methods=["GET", "POST"])
+@auth.route("/auth/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -69,13 +69,13 @@ def register():
     return render_template("auth/register.html", form=form)
 
 # 用户信息
-@auth.route("auth/user_info")
+@auth.route("/auth/user_info")
 @login_required
 def user_info():
     return render_template("auth/user_info.html")
 
 # 新用户邮箱确认
-@auth.route("auth/confirm/<token>")
+@auth.route("/auth/confirm/<token>")
 @login_required
 def confirm(token):
     if current_user.confirmed:
@@ -88,7 +88,7 @@ def confirm(token):
     return redirect(url_for("main.index"))
 
 # 重新发送账户确认邮件
-@auth.route("auth/confirm")
+@auth.route("/auth/confirm")
 @login_required
 def resend_confirmation():
     token = current_user.generate_confirmation_token()
@@ -98,7 +98,7 @@ def resend_confirmation():
     return redirect(url_for("main.index"))
 
 # 修改密码
-@auth.route("auth/change-password", methods=["GET", "POST"])
+@auth.route("/auth/change-password", methods=["GET", "POST"])
 @login_required
 def change_password():
     form = ChangePasswordForm()
@@ -114,7 +114,7 @@ def change_password():
     return render_template("auth/change_password.html", form=form)
 
 # 通过邮件发送重置密码的请求
-@auth.route("auth/reset", methods=["GET", "POST"])
+@auth.route("/auth/reset", methods=["GET", "POST"])
 def password_reset_request():
     if not current_user.is_anonymous:
         return redirect(url_for("main.index"))
@@ -131,7 +131,7 @@ def password_reset_request():
     return render_template("auth/reset_password.html", form=form)
 
 # 重置密码
-@auth.route("auth/reset/<token>", methods=["GET", "POST"])
+@auth.route("/auth/reset/<token>", methods=["GET", "POST"])
 def password_reset(token):
     if not current_user.is_anonymous:
         return redirect(url_for("main.index"))
@@ -146,7 +146,7 @@ def password_reset(token):
     return render_template("auth/reset_password.html", form=form)
 
 # 重置邮箱的请求
-@auth.route("auth/change_email", methods=["GET", "POST"])
+@auth.route("/auth/change_email", methods=["GET", "POST"])
 @login_required
 def change_email_request():
     form = ChangeEmailForm()
@@ -164,7 +164,7 @@ def change_email_request():
     return render_template("auth/change_email.html", form=form)
 
 # 重置邮箱
-@auth.route("auth/change_email/<token>")
+@auth.route("/auth/change_email/<token>")
 @login_required
 def change_email(token):
     if current_user.change_email(token):       # 调用User对象的change_email方法
