@@ -30,11 +30,14 @@ def create_app(config_name):
     from .main import main as main_blueprint                  # 导入蓝本main
     app.register_blueprint(main_blueprint)                    # 注册蓝本main
 
-    from .auth import auth as auth_blueprint                   # 认证，导入蓝本auth
-    app.register_blueprint(auth_blueprint, url_prefix='/auth') # 注册蓝本auth
+    from .auth import auth as auth_blueprint                  # 认证，导入蓝本auth
+    app.register_blueprint(auth_blueprint)                    # 注册蓝本auth
 
-    from .reserve import reserve as reserve_blueprint                # 预约系统，导入蓝本reserve
-    app.register_blueprint(reserve_blueprint, url_prefix='/reserve') # 注册蓝本reserve
+    from .reserve import reserve as reserve_blueprint         # 预约系统，导入蓝本reserve
+    app.register_blueprint(reserve_blueprint)                 # 注册蓝本reserve
+
+    from .message_board import message_board as message_board_blueprint    # 留言板，导入蓝本message_board
+    app.register_blueprint(message_board_blueprint)                        # 注册蓝本message_board
 
     return app
 

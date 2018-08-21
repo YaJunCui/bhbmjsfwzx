@@ -6,7 +6,7 @@
     <h2>欢迎使用<b>我要预约</b>！</h2>
 </div>
 
-<div class="col-md-4 col-xs-4">
+<div class="col-md-4">
     <form action="" method="post" class="form" role="form">
         {{ form.hidden_tag() }}
         <div class="form-group  required">
@@ -26,19 +26,16 @@
             <input class="form-control" id="telephone" name="telephone" type="text" value="">
         </div>
         <div class="form-group ">
+            <label class="control-label" for="">预约日期:</label><br>
+            <input class="form-control-year" id="date_year" name="date_year" type="text" value="">
             <label class="control-label" for="date_year">年</label> 
-            <input class="form-control" id="date_year" name="date_year" type="text" value="">   
-        </div>
-        <div class="form-group ">
+            <input class="form-control-month" id="date_month" name="date_month" type="text" value="">   
             <label class="control-label" for="date_month">月</label>          
-            <input class="form-control" id="date_month" name="date_month" type="text" value="">          
-        </div>
-        <div class="form-group ">
-            <label class="control-label" for="date_day">日</label>   
-            <input class="form-control" id="date_day" name="date_day" type="text" value="">    
+            <input class="form-control-day" id="date_day" name="date_day" type="text" value="">
+            <label class="control-label" for="date_day">日</label>                
         </div>  
         <div class="form-group ">
-            <label class="control-label" for="time_interval">时段</label>    
+            <label class="control-label" for="time_interval">时段:</label>    
             <select class="form-control" id="time_interval" name="time_interval">
                 <option value="08:30--09:30">08:30--09:30</option>
                 <option value="09:30--10:30">09:30--10:30</option>
@@ -49,44 +46,10 @@
             </select>  
         </div>
         <div class="form-group ">
-            <label class="control-label" for="remarks">备注：</label>          
+            <label class="control-label" for="remarks">备注:</label>          
             <textarea class="form-control" id="remarks" name="remarks"></textarea>          
         </div>
         <input class="btn btn-primary" id="submit" name="submit" type="submit" value="提交">  
     </form>
 </div>
 {% endblock page_content%}
-
-
-<!-- https://segmentfault.com/a/1190000002531677 -->
-<!-- <form action="" method="post" class="form" role="form">
-    <input id="csrf_token" name="csrf_token" type="hidden" value="ImU5YjhkMGIwNGMzZjZkNDIyNmM4M2QyNWUyZTA2ZDE1MDIyNzAwNWYi.DtV0Yg.mZQagRB4-Gj-z5VOHqDsIIiba-g">
-    <div class="form-group  required"><label class="control-label" for="department"><font color="red">*</font>送销单位:</label> 
-        <input class="form-control" id="department" name="department" required="" type="text" value="">
-    </div>
-    <div class="form-group  required"><label class="control-label" for="approver"><font color="red">*</font>审批人:</label> 
-        <input class="form-control" id="approver" name="approver" placeholder="送销单位审批人" required="" type="text" value=""> 
-    </div>
-    <div class="form-group  required"><label class="control-label" for="sender"><font color="red">*</font>送销人:</label>
-        <input class="form-control" id="sender" name="sender" placeholder="须在职在编人员" required="" type="text" value=""> 
-    </div>
-    <div class="form-group "><label class="control-label" for="telephone">联系电话:</label>  
-        <input class="form-control" id="telephone" name="telephone" type="text" value="">
-    </div>
-    <div class="form-group "><label class="control-label" for="date_year">年</label> 
-        <input class="form-control" id="date_year" name="date_year" type="text" value="">   
-    </div>
-    <div class="form-group "><label class="control-label" for="date_month">月</label>          
-        <input class="form-control" id="date_month" name="date_month" type="text" value="">          
-    </div>
-    <div class="form-group "><label class="control-label" for="date_day">日</label>   
-        <input class="form-control" id="date_day" name="date_day" type="text" value="">    
-    </div>  
-    <div class="form-group "><label class="control-label" for="time_interval">时段</label>    
-        <select class="form-control" id="time_interval" name="time_interval"><option value="08:30--09:30">08:30--09:30</option><option value="09:30--10:30">09:30--10:30</option><option value="10:30--11:30">10:30--11:30</option><option value="14:30--15:30">14:30--15:30</option><option value="15:30--16:30">15:30--16:30</option><option value="16:30--17:30">16:30--17:30</option></select>  
-    </div>
-    <div class="form-group "><label class="control-label" for="remarks">备注：</label>          
-        <textarea class="form-control" id="remarks" name="remarks"></textarea>          
-    </div>
-    <input class="btn btn-default" id="submit" name="submit" type="submit" value="提交">  
-</form> -->

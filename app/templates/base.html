@@ -2,15 +2,16 @@
 
 {% block head %}
 {{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-table.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
 {% block navbar %}
 <div class="navbar-default">
     <div class="container">
-        <img src="{{ url_for('static', filename='logo.png') }}" width="452" height="50">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" width="452" height="50">
     </div>
 </div>
 <div class="navbar-default" role="navigation">
@@ -37,7 +38,7 @@
                       <li><a href="#">查询预约</a></li>
                     </ul>
                   </li>
-                <li><a href="#">咨询交流</a></li>
+                <li><a href="#">留言板</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
@@ -76,4 +77,6 @@
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
+<script src="{{ url_for('static', filename='src/bootstrap-table.js') }}"></script>
+<script src="{{ url_for('static', filename='src/locale/bootstrap-table-zh-CN.js') }}"></script>
 {% endblock %}
