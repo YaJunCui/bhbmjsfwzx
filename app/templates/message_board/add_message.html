@@ -6,49 +6,39 @@
     <h2>欢迎使用<b>留言板</b>！</h2>
 </div>
 
-<div class="col-md-4">
-    <form action="" method="post" class="form" role="form">
-        <div class="form-group  required">
-            <label class="control-label" for="department"><font color="red">*</font>送销单位:</label> 
-            <input class="form-control" id="department" name="department" required="" type="text" value="{{ current_user.department }}">
+<div class="col-md-offset-3  col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">已添加教师账号</h3>
         </div>
-        <div class="form-group  required">
-            <label class="control-label" for="approver"><font color="red">*</font>审批人:</label> 
-            <input class="form-control" id="approver" name="approver" placeholder="送销单位审批人" required="" type="text" value=""> 
+        <div class="panel-body">
+            <div id="toolbar" class="btn-group">
+                <button id="btn_edit" type="button" class="btn btn-default" >
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+                <button id="btn_delete" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+            </div>
+            <table id="teacher_table" data-toggle="table" data-url="./data.php" data-method="post"
+                data-query-params="queryParams"
+                data-toolbar="#toolbar"
+                data-pagination="true"
+                data-search="true"
+                data-show-refresh="true"
+                data-show-toggle="true"
+                data-show-columns="true"
+                data-page-size="5">
+                <thead>
+                <tr>
+                    <th data-field="name">用户账号</th>
+                    <th data-field="pwd">用户密码</th>
+                    <th data-field="t_name">教师姓名</th>
+                </tr>
+                </thead>
+            </table> 
         </div>
-        <div class="form-group  required">
-            <label class="control-label" for="sender"><font color="red">*</font>送销人:</label>
-            <input class="form-control" id="sender" name="sender" placeholder="须在职在编人员" required="" type="text" value=""> 
-        </div>
-        <div class="form-group ">
-            <label class="control-label" for="telephone">联系电话:</label>  
-            <input class="form-control" id="telephone" name="telephone" type="text" value="">
-        </div>
-        <div class="form-group ">
-            <label class="control-label" for="">预约日期:</label><br>
-            <input class="form-control-year" id="date_year" name="date_year" type="text" value="">
-            <label class="control-label" for="date_year">年</label> 
-            <input class="form-control-month" id="date_month" name="date_month" type="text" value="">   
-            <label class="control-label" for="date_month">月</label>          
-            <input class="form-control-day" id="date_day" name="date_day" type="text" value="">
-            <label class="control-label" for="date_day">日</label>                
-        </div>  
-        <div class="form-group ">
-            <label class="control-label" for="time_interval">时段:</label>    
-            <select class="form-control" id="time_interval" name="time_interval">
-                <option value="08:30--09:30">08:30--09:30</option>
-                <option value="09:30--10:30">09:30--10:30</option>
-                <option value="10:30--11:30">10:30--11:30</option>
-                <option value="14:30--15:30">14:30--15:30</option>
-                <option value="15:30--16:30">15:30--16:30</option>
-                <option value="16:30--17:30">16:30--17:30</option>
-            </select>  
-        </div>
-        <div class="form-group ">
-            <label class="control-label" for="remarks">备注:</label>          
-            <textarea class="form-control" id="remarks" name="remarks"></textarea>          
-        </div>
-        <input class="btn btn-primary" id="submit" name="submit" type="submit" value="提交">  
-    </form>
+    </div>
 </div>
+
 {% endblock page_content%}
