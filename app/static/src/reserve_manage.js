@@ -11,8 +11,8 @@ $('#table').bootstrapTable({
     sortName: 'reserve_date',            // 要排序的字段
     sortOrder: 'desc',                   // 排序规则
     search: true,                        // 是否启用搜索框
-    // searchOnEnterKey: true,              // 设置为true时，按回车触发搜索方法，否则自动触发搜索方法
-    showColumns: true,                   //是否显示所有的列
+    // searchOnEnterKey: true,             // 设置为true时，按回车触发搜索方法，否则自动触发搜索方法
+    showColumns: true,                   //是否显示内容列下拉框
     minimumCountColumns: 1,              //最少允许的列数
     showRefresh: true,                   // 是否显示刷新按钮
     clickToSelect: true,                 //是否启用点击选中行
@@ -25,6 +25,7 @@ $('#table').bootstrapTable({
         title: '送销单位',
         align: 'center',                 // 水平居中显示
         valign: 'middle',                // 垂直居中显示
+        sortable: true,
     }, {
         field: 'approver',
         title: '审批人',
@@ -45,6 +46,7 @@ $('#table').bootstrapTable({
         title: '预约日期',
         align: 'center',                 // 水平居中显示
         valign: 'middle',                // 垂直居中显示
+        sortable: true,                  // 当前列进行排序
     }, {
         field: 'time_interval',
         title: '时段',
