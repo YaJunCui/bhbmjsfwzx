@@ -45,7 +45,7 @@ $('#table').bootstrapTable({
         title: '预约日期',
         align: 'center',                 // 水平居中显示
         valign: 'middle',                // 垂直居中显示
-    }, {                                                               北海市机关事务管理局	600	北海市国家保密局	
+    }, {
         field: 'time_interval',
         title: '时段',
         align: 'center',                 // 水平居中显示
