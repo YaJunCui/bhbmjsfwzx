@@ -215,12 +215,26 @@ class ReserveInfo(db.Model):
     approver = db.Column(db.String(64))                           # 送销单位审批人
     sender = db.Column(db.String(64))                             # 送销人
     telephone = db.Column(db.String(64))                          # 联系电话
-    date_year = db.Column(db.String(64))                               # 日期
-    date_month = db.Column(db.String(64))                               # 日期
-    date_day = db.Column(db.String(64))                               # 日期
+    date_year = db.Column(db.String(64))                          # 日期
+    date_month = db.Column(db.String(64))                         # 日期
+    date_day = db.Column(db.String(64))                           # 日期
     time_interval = db.Column(db.String(64))                      # 时段
     remarks = db.Column(db.Text())                                # 备注
 
+    def getDictObj(self):                                             # 格式化为python字典对象
+        return {
+            'id': self.id,
+            'department': self.department,
+            'approver': self.approver,
+            'sender': self.sender,
+            'telephone': self.telephone,
+            'date_year': self.date_year,
+            'date_month': self.date_month,
+            'date_day': self.date_day,
+            'reserve_date': self.date_year+'-'+self.date_month+'-'+self.date_day,
+            'time_interval': self.time_interval,
+            'remarks': self.remarks
+        }
 
     def __repr__(self):
         return '<ReserveInfo %r>' % self.department

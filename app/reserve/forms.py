@@ -1,13 +1,14 @@
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
-    SubmitField, DateTimeField
+    SubmitField, DateTimeField, HiddenField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 
 
 # 预约信息表单
 class ReserveInfoForm(FlaskForm):
+    id = HiddenField("ID")
     department = StringField("<font color='red'>*</font>送销单位:", validators=[DataRequired(), Length(1, 64)])
     approver = StringField("<font color='red'>*</font>审批人:", validators=[DataRequired(), Length(1, 64)], render_kw={"placeholder":"送销单位审批人"})
     sender = StringField("<font color='red'>*</font>送销人:", validators=[DataRequired(), Length(1, 64)], render_kw={"placeholder":"须在职在编人员"})

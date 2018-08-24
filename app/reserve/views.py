@@ -1,10 +1,11 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from . import reserve
 from .forms import ReserveInfoForm
 from .. import db
 from ..models import Role, User, ReserveInfo
 
+# 新增预约数据
 @reserve.route('/reserve/add_reserve', methods=["GET", "POST"])
 @login_required
 def add_reserve():
@@ -28,3 +29,40 @@ def add_reserve():
         return redirect(url_for('reserve.add_reserve'))
     form.department.data = current_user.department
     return render_template("reserve/add_reserve.html", form=form)
+
+# 修改预约数据
+@reserve.route('/reserve/edit_reserve', methods=["GET", "POST"])
+@login_required
+def edit_reserve():
+    flash(int(request.args.get('id')))
+    reserve_info_id = int(request.args.get('id'))      # 获取预约数据的id
+    reserveInfo = ReserveInfo.query.get_or_404(reserve_info_id)
+    form = ReserveInfoForm()
+    if form.validate_on_submit():
+        reserveInfo.department = form.department.data         
+        reserveInfo.approver = form.approver.data
+        reserveInfo.sender = form.sender.data
+        reserveInfo.telephone = form.telephone.data
+        reserveInfo.date_year = form.date_year.data
+        reserveInfo.date_month = form.date_month.data
+        reserveInfo.date_day = form.date_day.data
+        reserveInfo.time_interval = form.time_interval.data
+        reserveInfo.remarks = form.remarks.data
+        
+        db.session.add(reserve_info)  # 通过_get_current_object()获取User对象
+        db.session.commit()
+        flash('您的预约信息已经修改成功！')
+        return redirect(url_for('reserve.edit_reserve'))
+    
+    # 获取选中行的预约数据
+    form.department.data = reserveInfo.department                 
+    form.approver.data = reserveInfo.approver
+    form.sender.data = reserveInfo.sender
+    form.telephone.data = reserveInfo.telephone
+    form.date_year.data = reserveInfo.date_year
+    form.date_month.data = reserveInfo.date_month
+    form.date_day.data = reserveInfo.date_day
+    form.time_interval.data = reserveInfo.time_interval
+    form.remarks.data = reserveInfo.remarks
+
+    return render_template("reserve/edit_reserve.html", form=form)
