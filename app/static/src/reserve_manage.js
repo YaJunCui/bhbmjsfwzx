@@ -1,6 +1,6 @@
 $(function(){
     $('#table_reserve').bootstrapTable({
-        url:'/message_board/reserve_manage', // 获取表格数据的url
+        url:'/reserve/reserve_data',         // 获取表格数据的url
         toolbar: "#toolbar",
         cache: false,                        //是否使用缓存
         pagination: true,                    // 在表格底部显示分页组件，默认false

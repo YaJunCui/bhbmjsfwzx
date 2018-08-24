@@ -12,32 +12,32 @@
             {{ form.hidden_tag() }}
             <div class="form-group  required">
                 <label class="control-label" for="department"><font color="red">*</font>送销单位:</label> 
-                <input class="form-control" id="department" name="department" required="" type="text" value="{{ current_user.department }}">
+                <input class="form-control" id="department" name="department" required="" type="text" value="{{ form.department.data }}">
             </div>
             <div class="form-group  required">
                 <label class="control-label" for="approver"><font color="red">*</font>审批人:</label> 
-                <input class="form-control" id="approver" name="approver" placeholder="送销单位审批人" required="" type="text" value=""> 
+                <input class="form-control" id="approver" name="approver" placeholder="送销单位审批人" required="" type="text" value="{{ form.approver.data }}"> 
             </div>
             <div class="form-group  required">
                 <label class="control-label" for="sender"><font color="red">*</font>送销人:</label>
-                <input class="form-control" id="sender" name="sender" placeholder="须在职在编人员" required="" type="text" value=""> 
+                <input class="form-control" id="sender" name="sender" placeholder="须在职在编人员" required="" type="text" value="{{ form.sender.data }}"> 
             </div>
             <div class="form-group ">
                 <label class="control-label" for="telephone">联系电话:</label>  
-                <input class="form-control" id="telephone" name="telephone" type="text" value="">
+                <input class="form-control" id="telephone" name="telephone" type="text" value="{{ form.telephone.data }}">
             </div>
             <div class="form-group ">
                 <label class="control-label" for="">预约日期:</label><br>
-                <input class="form-control-year" id="date_year" name="date_year" type="text" value="">
+                <input class="form-control-year" id="date_year" name="date_year" type="text" value="{{ form.date_year.data }}">
                 <label class="control-label" for="date_year">年</label> 
-                <input class="form-control-month" id="date_month" name="date_month" type="text" value="">   
+                <input class="form-control-month" id="date_month" name="date_month" type="text" value="{{ form.date_month.data }}">   
                 <label class="control-label" for="date_month">月</label>          
-                <input class="form-control-day" id="date_day" name="date_day" type="text" value="">
+                <input class="form-control-day" id="date_day" name="date_day" type="text" value="{{ form.date_day.data }}">
                 <label class="control-label" for="date_day">日</label>                
             </div>  
             <div class="form-group ">
                 <label class="control-label" for="time_interval">时段:</label>    
-                <select class="form-control" id="time_interval" name="time_interval">
+                <select class="form-control" id="time_interval" name="time_interval" flag="{{ form.time_interval.data }}">
                     <option value="08:30--09:30">08:30--09:30</option>
                     <option value="09:30--10:30">09:30--10:30</option>
                     <option value="10:30--11:30">10:30--11:30</option>
@@ -48,7 +48,7 @@
             </div>
             <div class="form-group ">
                 <label class="control-label" for="remarks">备注:</label>          
-                <textarea class="form-control" id="remarks" name="remarks"></textarea>          
+                <textarea class="form-control" id="remarks" name="remarks">{{ form.remarks.data }}</textarea>          
             </div>
             <input class="btn btn-primary" id="submit" name="submit" type="submit" value="提交">  
         </form>
@@ -56,3 +56,8 @@
 </div>
 
 {% endblock page_content%}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='src/edit_reserve.js') }}"></script>
+{% endblock %}
