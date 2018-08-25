@@ -71,7 +71,7 @@ $(function(){
 
 // 新增按钮的点击事件函数
 function clickBtnAddFunc(params) {
-    window.location.href = "../reserve/add_reserve";
+    window.location.href = "/reserve/reserve_add";
 }
 
 // 修改按钮的点击事件
@@ -85,5 +85,5 @@ function clickBtnEditFunc(params) {
         alert("您已经选中"+lstDataLen+"行数据，您只能选中1行数据进行修改！")
     }
 
-    window.location.href = "../reserve/edit_reserve?id="+lstData[0].id;   // 将选中数据的ID通过url传入后台
+    window.location.href = "/reserve/reserve_edit?id="+lstData[0].id;   // 将选中数据的ID通过url传入后台
 }
