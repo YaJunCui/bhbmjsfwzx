@@ -11,26 +11,32 @@ from ..message_board import message_board
 @reserve.route('/reserve/reserve_add', methods=["GET", "POST"])
 @login_required
 def reserve_add():
-    user = User.query.get_or_404(current_user.id)
-    form = ReserveInfoForm()
-    if form.validate_on_submit():
-        reserve_info = ReserveInfo(
-            department = form.department.data,
-            approver = form.approver.data,
-            sender = form.sender.data,
-            telephone = form.telephone.data,
-            date_year = form.date_year.data,
-            date_month = form.date_month.data,
-            date_day = form.date_day.data,
-            time_interval = form.time_interval.data,
-            remarks = form.remarks.data
+    if request.method == 'GET':                       # GET请求         
+        user = User.query.get_or_404(current_user.id)
+        form = ReserveInfoForm()
+        form.department.data = current_user.department
+        return render_template("reserve/reserve_add.html", form=form)
+    elif request.method == 'POST':                       # POST请求              
+        data_dict = request.get_json()                   # 获取前台的数据(json格式)
+        reserveInfo = ReserveInfo(
+            department = data_dict.get('department',''),
+            approver = data_dict.get('approver',''),
+            sender = data_dict.get('sender',''),
+            telephone = data_dict.get('telephone',''),
+            date_year = data_dict.get('date_year',''),
+            date_month = data_dict.get('date_month',''),
+            date_day = data_dict.get('date_day',''),
+            time_interval = data_dict.get('time_interval',''),
+            remarks = data_dict.get('remarks',''),
         )
-        db.session.add(reserve_info)  # 通过_get_current_object()获取User对象
+        db.session.add(reserveInfo)                       # 向数据库增加预约数据
         db.session.commit()
-        flash('您的预约信息已经增加！')
-        return redirect(url_for('reserve.reserve_manage'))
-    form.department.data = current_user.department
-    return render_template("reserve/reserve_add.html", form=form)
+
+        res = {                                           # 返回的数据 
+            'url': url_for('reserve.reserve_manage'),
+            'code': 'success'
+        }     
+        return json.dumps(res)  
 
 # 修改预约数据
 @reserve.route('/reserve/reserve_edit', methods=["GET", "POST"])
