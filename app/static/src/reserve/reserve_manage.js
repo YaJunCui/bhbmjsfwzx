@@ -22,6 +22,11 @@ $(function(){
         columns: [ {
             checkbox: true,                  // 显示一个复选框
         }, {
+            field: 'id',
+            title: 'ID',
+            align: 'center',                 // 水平居中显示
+            valign: 'middle',                // 垂直居中显示
+        }, {
             field: 'department',
             title: '送销单位',
             align: 'center',                 // 水平居中显示
@@ -64,9 +69,6 @@ $(function(){
     $('#btn_add').click(clickBtnAddFunc);        // 新增按钮的点击事件
     $('#btn_edit').click(clickBtnEditFunc);      // 修改按钮的点击事件
     $('#btn_delete').click(clickBtnDeleteFunc);  // 删除按钮的点击事件
-
-    // $('#table_reserve').bootstrapTable()
-
 });
 
 // 新增按钮的点击事件函数
@@ -86,4 +88,39 @@ function clickBtnEditFunc(params) {
     }
 
     window.location.href = "/reserve/reserve_edit?id="+lstData[0].id;   // 将选中数据的ID通过url传入后台
+}
+
+function clickBtnDeleteFunc(params) {
+    $table = $('#table_reserve')
+    var lstData = $table.bootstrapTable('getSelections');
+    var lstDataLen = lstData.length;
+
+    if(lstDataLen < 1) {
+        alert("请选择需要删除的数据！");
+    }
+
+    var r = confirm("您确认要删除"+lstDataLen+"条数据吗？");      // 删除预约信息的确认框
+    if (r == true) {
+        var ids = $.map($table.bootstrapTable('getSelections'), // 获取选中数据行的ID
+                        function (row) {  
+                            return row.id;
+                        });
+        var data_dict = { 'ids' : ids};
+        $.ajax({                                                // 删除数据
+            type: 'POST',
+            url: '/reserve/reserve_delete',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(data_dict),                    // 获取页面数据
+            success: function(resp, textStatus) {
+                $table.bootstrapTable('remove', {               // 删除数据
+                    field: 'id',
+                    values: ids
+                });
+            },
+            error: function(xmlHttpRequest, textStatus, errorTrown) {
+                console.log('删除失败！');
+            }
+        });
+    } 
 }

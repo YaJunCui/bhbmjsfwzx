@@ -55,9 +55,8 @@ def reserve_edit():
 
         return render_template("reserve/reserve_edit.html", form=form)
 
-    elif request.method == 'POST':                       # POST请求
-        print(request.get_json())                        # 获取前台的数据(json格式)
-        data_dict = request.get_json()
+    elif request.method == 'POST':                       # POST请求              
+        data_dict = request.get_json()                   # 获取前台的数据(json格式)
         reserveInfo = ReserveInfo.query.get_or_404(int(data_dict['id']))
 
         reserveInfo.department = data_dict.get('department','--')         
@@ -73,7 +72,7 @@ def reserve_edit():
         db.session.add(reserveInfo)           
         db.session.commit()
 
-        res = {'url': url_for('reserve.reserve_manage')}           # 返回的数据
+        res = {'url': url_for('reserve.reserve_manage')}     # 返回的数据
         return json.dumps(res)  
 
 # 预约管理页面
@@ -82,8 +81,8 @@ def reserve_edit():
 def reserve_manage():
     return render_template("reserve/reserve_manage.html")
 
-
-@reserve.route('/reserve/reserve_data')
+# 获取预约数据
+@reserve.route('/reserve/reserve_data', methods=["GET", "POST"])
 @login_required
 def reserve_data():
     reserveInfos = ReserveInfo.query.all()            # 获取所有预约信息
@@ -91,4 +90,21 @@ def reserve_data():
     for reserveInfo in reserveInfos:
         rows.append(reserveInfo.getDictObj())
     result = json.dumps(rows)
+    return result
+
+# 删除选中的预约数据
+@reserve.route('/reserve/reserve_delete', methods=["GET", "POST"])
+@login_required
+def reserve_delete():
+    print(request.get_json())       
+    data_dict = request.get_json()                   # 获取前台的数据(json格式)
+    for id in data_dict['ids']:                      # 删除选中的数据
+        ReserveInfo.query.filter_by(id=int(id)).delete()
+    db.session.commit()
+
+    resp = {
+        'code': 'success',
+    }
+
+    result = json.dumps(resp)
     return result

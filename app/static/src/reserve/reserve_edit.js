@@ -14,9 +14,9 @@ function clickSubmitBtnFuc() {
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(getData()),             // 获取页面数据
-        success: function(data, textStatus) {
-            console.log('成功！'+data);
-            window.location.href = data['url'];
+        success: function(resp, textStatus) {
+            console.log('成功！'+resp);
+            window.location.href = resp['url'];
         },
         error: function(xmlHttpRequest, textStatus, errorTrown) {
             console.log('失败！');
