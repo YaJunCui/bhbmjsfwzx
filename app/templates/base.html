@@ -1,9 +1,9 @@
 {% extends "bootstrap/base.html" %}
 
 {% block head %}
-{{ super() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.3.3.7.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-table.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
@@ -74,8 +74,27 @@
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-<script src="{{ url_for('static', filename='src/bootstrap-table.1.12.1.js') }}"></script>
-<script src="{{ url_for('static', filename='src/locale/bootstrap-table-zh-CN.js') }}"></script>
+<script src="{{ url_for('static', filename='src/lib/jquery.min.1.12.4.js') }}"></script>
+<script src="{{ url_for('static', filename='src/lib/bootstrap.min.3.3.7.js') }}"></script>
+<script src="{{ url_for('static', filename='src/lib/moment-with-locales.min.2.18.1.js') }}"></script>
+<script>
+    moment.locale("zh-cn");    // 简体中文    
+    function flask_moment_render(elem) {
+        $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+        $(elem).removeClass('flask-moment').show();
+    }
+    function flask_moment_render_all() {
+        $('.flask-moment').each(function() {
+            flask_moment_render(this);
+            if ($(this).data('refresh')) {
+                (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+            }
+        })
+    }
+    $(document).ready(function() {
+        flask_moment_render_all();
+    });
+</script>
+<script src="{{ url_for('static', filename='src/lib/bootstrap-table.1.12.1.js') }}"></script>
+<script src="{{ url_for('static', filename='src/lib/locale/bootstrap-table-zh-CN.js') }}"></script>
 {% endblock %}

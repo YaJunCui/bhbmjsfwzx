@@ -29,7 +29,7 @@ function getData() {
     var department = $('#department').val();      // 送销单位
     var approver = $('#approver').val();          // 审批人
     var sender = $('#sender').val();              // 送销人
-    var telephone = $('#telephone').val() | '--'; // 联系方式
+    var telephone = $('#telephone').val();        // 联系方式
     var date_year = $('#date_year').val();        // 年
     var date_month = $('#date_month').val();      // 月
     var date_day = $('#date_day').val();          // 日

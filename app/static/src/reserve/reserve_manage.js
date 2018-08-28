@@ -85,9 +85,9 @@ function clickBtnEditFunc(params) {
         alert("请选中1行需要修改的数据！");
     } else if(lstDataLen > 1) {
         alert("您已经选中"+lstDataLen+"行数据，您只能选中1行数据进行修改！")
-    }
-
-    window.location.href = "/reserve/reserve_edit?id="+lstData[0].id;   // 将选中数据的ID通过url传入后台
+    } else {
+        window.location.href = "/reserve/reserve_edit?id="+lstData[0].id;   // 将选中数据的ID通过url传入后台
+    }    
 }
 
 function clickBtnDeleteFunc(params) {

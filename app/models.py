@@ -10,14 +10,14 @@ from . import db, login_manager
 class Permission:
     """
     匿名（0x00）：未登录的用户。
-    注册用户（0x01）：用户已经注册，但信息未确认。具有读权限。
+    未认证用户（0x01）：用户已经注册，但信息未确认。具有读权限。
     普通用户（0x03）：信息已确认，具有读写权限。
     协管员（0x07）：可以驳回用户的申请
     管理员（0x87）：具有所有权限
     """
     RAED = 0x01        # 读权限
     WRITE = 0x02       # 写权限
-    MODERATE = 0x04    # 修改权限
+    MODERATE = 0x04    # 驳回权限
     ADMIN = 0x80       # 管理员权限
 
 
@@ -178,6 +178,14 @@ class User(UserMixin, db.Model):
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
 
+    # 检查用户是否为普通用户
+    def is_user(self):
+        return self.can(Permission.WRITE)
+
+    # 检查用户是否为协管员
+    def is_moderator(self):
+        return self.can(Permission.MODERATE)
+
     # 检查用户是否为管理员
     def is_administrator(self):
         return self.can(Permission.ADMIN)
@@ -220,6 +228,7 @@ class ReserveInfo(db.Model):
     date_day = db.Column(db.String(64))                           # 日期
     time_interval = db.Column(db.String(64))                      # 时段
     remarks = db.Column(db.Text())                                # 备注
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))    # 用户ID
 
     def getDictObj(self):                                             # 格式化为python字典对象
         return {

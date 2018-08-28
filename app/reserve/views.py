@@ -7,6 +7,24 @@ from .. import db
 from ..models import Role, User, ReserveInfo
 from ..message_board import message_board
 
+
+# 获取预约数据
+@reserve.route('/reserve/reserve_data', methods=["GET", "POST"])
+@login_required
+def reserve_data():
+    rows = []
+    # 协管员和管理员可以获取所有预约信息
+    if current_user.is_moderator() or current_user.is_administrator():
+        reserveInfos = ReserveInfo.query.all()  
+    # 获取该用户的预约信息
+    elif current_user.is_user():
+        reserveInfos = ReserveInfo.query.filter_by(user_id=current_user.id).all()
+
+    for reserveInfo in reserveInfos:
+        rows.append(reserveInfo.getDictObj())
+    result = json.dumps(rows)
+    return result
+
 # 新增预约数据
 @reserve.route('/reserve/reserve_add', methods=["GET", "POST"])
 @login_required
@@ -28,6 +46,7 @@ def reserve_add():
             date_day = data_dict.get('date_day',''),
             time_interval = data_dict.get('time_interval',''),
             remarks = data_dict.get('remarks',''),
+            user_id = current_user.id,
         )
         db.session.add(reserveInfo)                       # 向数据库增加预约数据
         db.session.commit()
@@ -65,6 +84,9 @@ def reserve_edit():
         data_dict = request.get_json()                   # 获取前台的数据(json格式)
         reserveInfo = ReserveInfo.query.get_or_404(int(data_dict['id']))
 
+        print('--------------------------')
+        print(data_dict)
+        print('--------------------------')
         reserveInfo.department = data_dict.get('department','--')         
         reserveInfo.approver = data_dict.get('approver','--')
         reserveInfo.sender = data_dict.get('sender','--')
@@ -86,17 +108,6 @@ def reserve_edit():
 @login_required
 def reserve_manage():
     return render_template("reserve/reserve_manage.html")
-
-# 获取预约数据
-@reserve.route('/reserve/reserve_data', methods=["GET", "POST"])
-@login_required
-def reserve_data():
-    reserveInfos = ReserveInfo.query.all()            # 获取所有预约信息
-    rows = []
-    for reserveInfo in reserveInfos:
-        rows.append(reserveInfo.getDictObj())
-    result = json.dumps(rows)
-    return result
 
 # 删除选中的预约数据
 @reserve.route('/reserve/reserve_delete', methods=["GET", "POST"])
