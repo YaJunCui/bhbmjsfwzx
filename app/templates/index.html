@@ -3,6 +3,19 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h2>欢迎使用<b>北海市保密技术服务中心管理系统</b></h2>
+    <h2>欢迎使用<b>北海市保密技术服务中心管理系统</b>！</h2>
+    <h2>预约信息一览表如下所示：<small>截止至 {{ moment().format('LLL') }}</small></h2>
 </div>
+<div id="toolbar" class="btn-group">
+    <button id="btn_today" type="button" class="btn btn-default btn-sm">今天</button>
+    <button id="btn_current_week" type="button" class="btn btn-default btn-sm">本周</button>
+    <button id="btn_current_month" type="button" class="btn btn-default btn-sm">本月</button>
+</div>
+<table id="table_index"></table>
+{% endblock page_content%}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='src/index.js') }}"></script>
 {% endblock %}
+

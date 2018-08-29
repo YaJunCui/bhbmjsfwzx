@@ -1,3 +1,4 @@
+import json
 from flask import render_template, redirect, url_for, abort, flash
 from flask_login import login_required, current_user
 from . import main
@@ -10,6 +11,22 @@ from ..decorators import admin_required
 @main.route('/')
 def index():
     return render_template('index.html')
+
+# 获取预约数据
+@main.route('/index/total_data', methods=["GET", "POST"])
+@login_required
+def total_data():
+    rows = [{
+        'date': '2018-08-30',
+        '08:30--09:30':'北海市工业园区管委会',
+        '09:30--10:30':'市委组织部',
+        '10:30--11:30':'市委办公室',
+        '14:30--15:30':'涉密载体销毁中心',
+        '15:30--16:30':'北海市国家保密局',
+        '16:30--17:30':'市纪委',
+    }]
+    result = json.dumps(rows)
+    return result
 
 # 资料页面路由
 @main.route('/user/<username>')
