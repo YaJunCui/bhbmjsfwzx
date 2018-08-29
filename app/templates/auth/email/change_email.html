@@ -1,7 +1,16 @@
-<p>Dear {{ user.username }},</p>
-<p>To confirm your new email address <a href="{{ url_for('auth.change_email', token=token, _external=True) }}">click here</a>.</p>
-<p>Alternatively, you can paste the following link in your browser's address bar:</p>
+<p>{{ user.username }} 您好，</p>
+<p>欢迎您使用<b>北海市保密技术服务中心管理系统</b>！</p>
+
+<p>请在1小时内点击 <a href="{{ url_for('auth.change_email', token=token, _external=True) }}">链接</a>，以完成邮箱地址修改。</p>
+
+<p>或者您可以复制下面这个链接到浏览器中访问来修改您的邮箱地址：</p>
 <p>{{ url_for('auth.change_email', token=token, _external=True) }}</p>
-<p>Sincerely,</p>
-<p>The Flasky Team</p>
-<p><small>Note: replies to this email address are not monitored.</small></p>
+
+<p>此致，</p>
+<p>北海市保密技术服务中心管理系统团队</p>
+<p><small>提示: 此为系统邮箱，请勿回复。</small></p>
+
+
+
+
+

@@ -1,11 +1,11 @@
-Dear {{ user.username }},
+{{ user.username }} 您好，
+欢迎您使用北海市保密技术服务中心管理系统！
 
-To confirm your new email address click on the following link:
+请在1小时内点击链接<a href="{{ url_for('auth.change_email', token=token, _external=True) }}">链接</a>，以完成邮箱地址修改。
 
+或者您可以复制下面这个链接到您的浏览器中访问来激活邮箱地址：
 {{ url_for('auth.change_email', token=token, _external=True) }}
 
-Sincerely,
-
-The Flasky Team
-
-Note: replies to this email address are not monitored.
+此致，
+北海市保密技术服务中心管理系统团队
+提示: 此为系统邮箱，请勿回复。
