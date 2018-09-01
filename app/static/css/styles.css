@@ -55,3 +55,16 @@
 }
 
 /********** end:首页样式 ************/
+
+
+/********** start:页脚样式 ************/
+.copyright {
+    margin-top: 15px;
+    background:#e7e7e7;
+    font-size: 13px;
+    text-align: center;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    border-top-color: #e7e7e7;
+}
+/********** end:页脚样式 ************/
