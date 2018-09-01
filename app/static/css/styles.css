@@ -42,3 +42,16 @@
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+/********** start:首页样式 ************/
+#table_index td:hover {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+#table_index td:active{
+    color: #fff;
+    background-color: #286090;
+}
+
+/********** end:首页样式 ************/

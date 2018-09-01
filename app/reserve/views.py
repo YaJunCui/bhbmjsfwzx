@@ -84,9 +84,6 @@ def reserve_edit():
         data_dict = request.get_json()                   # 获取前台的数据(json格式)
         reserveInfo = ReserveInfo.query.get_or_404(int(data_dict['id']))
 
-        print('--------------------------')
-        print(data_dict)
-        print('--------------------------')
         reserveInfo.department = data_dict.get('department','--')         
         reserveInfo.approver = data_dict.get('approver','--')
         reserveInfo.sender = data_dict.get('sender','--')
