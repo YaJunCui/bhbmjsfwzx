@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField("密码：", validators=[
         DataRequired(), EqualTo("password2", message="两次填写的密码不一致")])
     password2 = PasswordField("确认密码：", validators=[DataRequired()])
-    submit = SubmitField("立即注册", render_kw={"title":"按钮"})
+    submit = SubmitField("立即注册")
 
     # 校验邮箱是否已被注册
     def validate_email(self, field):

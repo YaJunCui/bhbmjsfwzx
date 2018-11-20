@@ -5,6 +5,7 @@ from flask import current_app
 from flask_login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
 
+
 # 角色权限常量
 class Permission:
     """
@@ -20,6 +21,7 @@ class Permission:
     ADMIN = 0x80       # 管理员权限
 
 
+# 角色类
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -72,6 +74,7 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
+# 用户类
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -197,7 +200,25 @@ class AnonymousUser(AnonymousUserMixin):
 
 login_manager.anonymous_user = AnonymousUser
 
+
 # 加载用户的回调函数
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+# 预约信息
+class ReserveInfo(db.Model):
+    __tablename__ = "reserve_infos"
+    id = db.Column(db.Integer, primary_key=True)
+    department = db.Column(db.String(64), index=True)             # 送销部门
+    approver = db.Column(db.String(64))                           # 送销单位审批人
+    sender = db.Column(db.String(64))                             # 送销人
+    telephone = db.Column(db.String(64))                          # 联系电话
+    date = db.Column(db.String(64))                               # 日期
+    time_interval = db.Column(db.String(64))                      # 时段
+    remarks = db.Column(db.Text())                                # 备注
+
+
+    def __repr__(self):
+        return '<ReserveInfo %r>' % self.department
