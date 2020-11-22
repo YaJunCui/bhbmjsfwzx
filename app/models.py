@@ -24,8 +24,8 @@ class Permission:
 # 角色类
 class Role(db.Model):
     __tablename__ = 'roles'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    id = db.Column(db.Integer, primary_key=True)               # 角色ID
+    name = db.Column(db.String(64), unique=True)               # 角色名字
     default = db.Column(db.Boolean, default=True, index=True)  # 是否为默认角色
     permissions = db.Column(db.Integer)                        # 角色权限
     users = db.relationship('User', backref='role', lazy='dynamic')
@@ -70,6 +70,7 @@ class Role(db.Model):
     def has_permission(self, perm):
         return self.permissions & perm == perm       # 位与运算
 
+    # 返回Role对象的string格式
     def __repr__(self):
         return '<Role %r>' % self.name
 
