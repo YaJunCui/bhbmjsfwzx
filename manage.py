@@ -11,7 +11,7 @@ manager = Manager(app)
 
 @app.shell_context_processor
 def make_shell_context():
-    return dict(db=db, User=User, Role=Role, ReserveInfo=ReserveInfo)
+    return dict(app=app, db=db, User=User, Role=Role, ReserveInfo=ReserveInfo)
 
 
 @app.cli.command()
