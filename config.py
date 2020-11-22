@@ -20,7 +20,7 @@ class Config:
     def init_app(app):
         pass
 
-
+# 开发环境的配置类
 class DevelopmentConfig(Config):
     DEBUG = True
     MAIL_SERVER = 'smtp.163.com'
@@ -32,19 +32,19 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
         'mysql+pymysql://root:root@127.0.0.1/myFlaskyDev'
 
-
+# 测试环境的配置类
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
         'mysql+pymysql://root:root@127.0.0.1/myFlaskyTest'
     WTF_CSRF_ENABLED = False
 
-
+# 生产环境的配置类
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'mysql+pymysql://root:root@127.0.0.1/myFlasky'
 
-
+# 注册不同的配置环境
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,

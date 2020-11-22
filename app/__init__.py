@@ -15,9 +15,10 @@ login_manager = LoginManager()
 login_manager.session_protection = "strong"     # 防止用户会话被篡改
 login_manager.login_view = "auth.login"         
 
-# 工厂函数
+# 工厂函数，参数为程序使用的配置名
 def create_app(config_name):
-    app = Flask(__name__)
+    app = Flask(__name__)                        # 创建Flask对象
+    # 没搞明白
     app.config.from_object(config[config_name])  # 导入config_name对应名称的配置对象的配置信息
     config[config_name].init_app(app)            # config[config_name]返回的是配置类
 
