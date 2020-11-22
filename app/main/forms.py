@@ -5,10 +5,10 @@ from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
 
-
+# 创建 NameForm 表单类
 class NameForm(FlaskForm):
-    name = StringField("What is your name?", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+    name = StringField("What is your name?", validators=[DataRequired()])  # 名为name的文本字段
+    submit = SubmitField("Submit")                                         # 名为submit的提交按钮
 
 # 普通用户和协管员编辑账号信息表单
 class EditProfileForm(FlaskForm):

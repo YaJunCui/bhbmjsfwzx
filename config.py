@@ -2,11 +2,12 @@ import os
 
 # 配置基类
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'bhbmjsfwzx'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'Flasky'
    
-    MAIL_SUBJECT_PREFIX = '[北海保密技术服务中心]'
-    MAIL_SENDER = 'bhbmjsfwzx@163.com'
-    ADMIN = 'bhbmjsfwzx@163.com'               # 管理员邮箱账号
+    # 关于email的全局变量
+    MAIL_SUBJECT_PREFIX = '[Flasky]'            # 邮件主题的前缀
+    MAIL_SENDER = 'bhbmjsfwzx@163.com'          # 发件人的地址
+    ADMIN = 'bhbmjsfwzx@163.com'                # 管理员邮箱账号
 
     SQLALCHEMY_POOL_RECYCLE = 5
     SQLALCHEMY_ECHO = True

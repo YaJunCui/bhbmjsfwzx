@@ -7,7 +7,7 @@ from flask_login import LoginManager
 from config import config
 
 bootstrap = Bootstrap()
-mail = Mail()
+mail = Mail()                                  # 初始化flask_mail邮箱
 moment = Moment()
 db = SQLAlchemy()
 
